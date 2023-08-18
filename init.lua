@@ -44,14 +44,7 @@ require("Comment").setup()
 pcall(require("telescope").load_extension, "fzf")
 
 -- LSP settings.
---  This function gets run when an LSP connects to a particular buffer.
 local on_attach = function(_, bufnr)
-  -- NOTE: Remember that lua is a real programming language, and as such it is possible
-  -- to define small helper and utility functions so you don't have to repeat yourself
-  -- many times.
-  --
-  -- In this case, we create a function that lets us more easily define mappings specific
-  -- for LSP related items. It sets the mode, buffer and description for us each time.
   local nmap = function(keys, func, desc)
     if desc then
       desc = "LSP: " .. desc
@@ -88,25 +81,9 @@ local on_attach = function(_, bufnr)
   end, { desc = "Format current buffer with LSP" })
 end
 
--- Enable the following language servers
---  Feel free to add/remove any LSPs that you want here. They will automatically be installed.
---
---  Add any additional override configuration in the following tables. They will be passed to
---  the `settings` field of the server config. You must look up that documentation yourself.
-local servers = {
-  pyright = {},
-
-  lua_ls = {
-    Lua = {
-      workspace = { checkThirdParty = false },
-      telemetry = { enable = false },
-    },
-  },
-}
-
 -- Setup neovim lua configuration
 require("neodev").setup()
---
+
 -- nvim-cmp supports additional completion capabilities, so broadcast that to servers
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities = require("cmp_nvim_lsp").default_capabilities(capabilities)
@@ -116,6 +93,27 @@ require("mason").setup()
 
 -- Ensure the servers above are installed
 local mason_lspconfig = require("mason-lspconfig")
+
+local servers = {
+  pyright = {},
+  lua_ls = {
+    Lua = {
+      workspace = { checkThirdParty = false },
+      telemetry = { enable = false },
+    },
+  },
+  tsserver = {},
+  solargraph = {
+    diagnostics = true,
+    completion = true,
+    flags = {
+      debounce_text_changes = 150,
+    },
+    initializationOptions = {
+      formatting = true,
+    },
+  },
+}
 
 mason_lspconfig.setup({
   ensure_installed = vim.tbl_keys(servers),
@@ -136,6 +134,7 @@ mason_lspconfig.setup_handlers({
 -- nvim-cmp setup
 local cmp = require("cmp")
 local luasnip = require("luasnip")
+local cmp_autopairs = require("nvim-autopairs.completion.cmp")
 
 cmp.setup({
   snippet = {
@@ -173,9 +172,10 @@ cmp.setup({
   sources = {
     { name = "nvim_lsp" },
     { name = "luasnip" },
+    { name = "bootstrap" },
   },
 })
 
--- The line beneath this is called `modeline`. See `:help modeline`
--- vim: ts=2 sts=2 sw=2 et
+cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done())
+
 vim.g.python3_host_prog = "/home/castlehoney/mambaforge/envs/neovim/bin/python"
