@@ -1,8 +1,8 @@
 return {
   "akinsho/toggleterm.nvim",
-  version = '*',
+  version = "*",
   config = function()
-    require('toggleterm').setup {
+    require("toggleterm").setup({
       open_mapping = [[<c-\>]],
       size = 20,
       hide_numbers = true,
@@ -23,6 +23,6 @@ return {
           background = "Normal",
         },
       },
-    }
-  end
+    })
+  end,
 }
