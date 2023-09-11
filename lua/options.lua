@@ -34,3 +34,5 @@ vim.cmd([[colorscheme rose-pine]])
 
 -- Set completeopt to have a better completion experience
 vim.opt.completeopt = "menuone,noselect"
+
+vim.g.python3_host_prog = "/home/castlehoney/mambaforge/envs/neovim/bin/python"
