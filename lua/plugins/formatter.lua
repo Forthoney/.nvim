@@ -11,6 +11,12 @@ return {
                 ruby = {
                     require("formatter.filetypes.ruby").rubocop,
                 },
+                python = {
+                    require("formatter.filetypes.python").black,
+                },
+                ocaml = {
+                    require("formatter.filetypes.ocaml").ocamlformat,
+                },
                 -- Use the special "*" filetype for defining formatter configurations on
                 -- any filetype
                 ["*"] = {
