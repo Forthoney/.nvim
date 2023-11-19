@@ -38,6 +38,7 @@ require("options")
 require("keymaps")
 require("autocommands")
 require("lsp")
+require("filetypes")
 
 -- Enable telescope fzf native, if installed
 pcall(require("telescope").load_extension, "fzf")
