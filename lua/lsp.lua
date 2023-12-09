@@ -5,6 +5,13 @@ capabilities = require("cmp_nvim_lsp").default_capabilities(capabilities)
 
 local lspconfig = require("lspconfig")
 
+-- vim.api.nvim_create_autocmd('LspAttach', {
+--     group = vim.api.nvim_create_augroup('UserLspConfig', {})
+--     callback = function (ev)
+--         vim.bo[ev.buf].omnifunc = 'v'
+--     end
+-- })
+
 local on_attach = function(_, bufnr)
     local nmap = function(keys, func, desc)
         if desc then
@@ -85,16 +92,16 @@ local function setup_diagnostics(client, buffer)
     })
 end
 
-require("lspconfig").ruby_ls.setup({
+lspconfig.ruby_ls.setup({
     on_attach = function(client, buffer)
         setup_diagnostics(client, buffer)
     end,
 })
 
--- lspconfig.steep.setup({
---     on_attach = on_attach,
---     capabilities = capabilities,
--- })
+lspconfig.steep.setup({
+    on_attach = on_attach,
+    capabilities = capabilities,
+})
 
 -- example to setup lua_ls and enable call snippets
 lspconfig.lua_ls.setup({
@@ -124,7 +131,7 @@ lspconfig.tsserver.setup({
     capabilities = capabilities,
 })
 
-lspconfig.racket_langserver.setup({
+lspconfig.rust_analyzer.setup({
     on_attach = on_attach,
     capabilities = capabilities,
 })

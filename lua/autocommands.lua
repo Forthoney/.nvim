@@ -11,11 +11,3 @@ vim.api.nvim_create_autocmd("TextYankPost", {
     group = vim.api.nvim_create_augroup("YankHighlight", { clear = true }),
     pattern = "*",
 })
-
--- Define an autocommand group called "FormatAutogroup"
-vim.cmd([[
-  augroup FormatAutogroup
-    autocmd!
-    autocmd BufWritePost * FormatWrite
-  augroup END
-]])
