@@ -3,7 +3,7 @@ local M = {
     build = ":TSUpdate",
     dependencies = { "nvim-treesitter/nvim-treesitter-textobjects" },
     opts = {
-        ensure_installed = { "c", "lua", "python", "typescript", "vim" },
+        ensure_installed = { "c", "lua", "python", "typescript", "javascript", "vim" },
 
         highlight = { enable = true },
         indent = { enable = true, disable = { "python" } },
